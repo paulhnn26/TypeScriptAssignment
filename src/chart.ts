@@ -7,7 +7,7 @@ export const chart = new Chart<"line">(chartCanvas, {
       labels: [],
       datasets: [{ 
           data: [],
-          label: "Infizierte",
+          label: "Infizierte nach x Tagen",
           borderColor: "#3e95cd",
           fill: false
         },

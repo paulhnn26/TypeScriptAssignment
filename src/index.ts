@@ -1,24 +1,20 @@
-//THIS IS THE ENTRY FILE - WRITE YOUR MAIN LOGIC HERE!
+import { growthrate, start, days, updateDaysView } from "./dom-utils";
+import { calculateRate } from "./formula";
 
-import { helloWorld, Beispiel } from "./myModule";
-import { alertMe } from "./myOtherModule";
 
-console.log(helloWorld);
-customElements.define("my-beispiel", Beispiel);
 
-alertMe();
 
-const myInputValue = document.querySelector<HTMLInputElement>("#myInput");
-
-const myInputValueAlternate = document.querySelector(
-  "#myInput"
-) as HTMLInputElement;
-
-document
-  .querySelector<HTMLInputElement>("#myInput")
-  ?.addEventListener("focus", doSmth);
-
-function doSmth(e: UIEvent) {
-  const val = e.target as HTMLInputElement;
-  console.log(e, val.value);
+function startCalculator(){
+// add initial Values
+growthrate.value = "1.1";
+start.value = "1";
+days.value = "1";
+//add Reactive Elements
+days.addEventListener("input", updateDaysView);
+days.addEventListener("input", calculateRate);
+growthrate.addEventListener("input", calculateRate);
+start.addEventListener("input", calculateRate);
 }
+
+startCalculator();
+

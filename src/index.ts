@@ -4,7 +4,7 @@ import { calculateRate } from './formula';
 
 function startCalculator(){
 //Get Initial Values
-growthrate.value = "1.1";
+growthrate.value = "1.2";
 start.value = "1";
 days.value = "1";
 

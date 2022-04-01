@@ -1,6 +1,8 @@
+import { chart, resetChart, updateChart } from "./chart";
 import { result, start, growthrate, days } from "./dom-utils";
 
 export function calculateRate() {
+    resetChart();
     const daysValue = +days.value;
     const startValue = Number(start.value);
     const growthrateValue = +growthrate.value;
@@ -13,6 +15,7 @@ export function calculateRate() {
         const res = Math.floor(
             startValue * Math.pow(growthrateValue,i)
             )
+        updateChart(i, res)
     }
 
 }

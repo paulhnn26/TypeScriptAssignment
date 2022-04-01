@@ -4,9 +4,9 @@ import { chartCanvas } from './dom-utils';
 export const chart = new Chart<"line">(chartCanvas, {
     type: 'line',
     data: {
-      labels: [1,2,3,4],
+      labels: [],
       datasets: [{ 
-          data: [10,20,30,50],
+          data: [],
           label: "Infizierte nach x Tagen",
           borderColor: "#3e95cd",
           fill: false
@@ -14,3 +14,14 @@ export const chart = new Chart<"line">(chartCanvas, {
       ]
     },
   });
+
+export function updateChart(label: number, data: number){
+chart.data.labels!.push(label);
+chart.data.datasets[0].data.push(data);
+chart.update();
+}
+
+export function resetChart(){
+  chart.data.labels = [];
+  chart.data.datasets[0].data = [];
+}

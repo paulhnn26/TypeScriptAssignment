@@ -1,13 +1,15 @@
-const days = document.getElementById("days");
-const growthrate = document.getElementById("growthrate");
-const start = document.getElementById("start") as HTMLElement;
-const result = document.getElementById("result");
-growthrate.value = 1.1;
-start.value = 1;
-days.value = 1;
+const days = document.getElementById("days") as HTMLInputElement;
+const growthrate = document.getElementById("growthrate") as HTMLInputElement;;
+const start = document.getElementById("start") as HTMLInputElement;
+const result = document.getElementById("result") as HTMLSpanElement;
+const daysView = document.getElementById("daysView") as HTMLSpanElement;
+
+growthrate.value = "1.1";
+start.value = "1";
+days.value = "1";
 
 days.addEventListener("input", updateDaysView);
-const daysView = document.getElementById("daysView");
+
 
 days.addEventListener("input", calculateRate);
 growthrate.addEventListener("input", calculateRate);
@@ -19,6 +21,6 @@ function updateDaysView() {
 
 function calculateRate() {
     result.innerHTML = Math.floor(
-        start.value * Math.pow(growthrate.value, days.value)
-    );
+      Number(start.value) * Math.pow(+growthrate.value, +days.value)
+    ).toString();
 }

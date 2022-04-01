@@ -1,4 +1,5 @@
 import Chart from 'chart.js/auto';
+import { chartCanvas } from './dom-utils';
 
 export const chart = new Chart<"line">(chartCanvas, {
     type: 'line',

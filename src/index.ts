@@ -1,3 +1,4 @@
+import { chart } from "./chart";
 import { growthrate, start, days, updateDaysView } from "./dom-utils";
 import { calculateRate } from './formula';
 
@@ -15,5 +16,5 @@ growthrate.addEventListener("input", calculateRate);
 start.addEventListener("input", calculateRate);
 
 }
-
+chart.update();
 startCalculator();

@@ -1,24 +1,24 @@
-//THIS IS THE ENTRY FILE - WRITE YOUR MAIN LOGIC HERE!
+const days = document.getElementById("days");
+const growthrate = document.getElementById("growthrate");
+const start = document.getElementById("start") as HTMLElement;
+const result = document.getElementById("result");
+growthrate.value = 1.1;
+start.value = 1;
+days.value = 1;
 
-import { helloWorld, Beispiel } from "./myModule";
-import { alertMe } from "./myOtherModule";
+days.addEventListener("input", updateDaysView);
+const daysView = document.getElementById("daysView");
 
-console.log(helloWorld);
-customElements.define("my-beispiel", Beispiel);
+days.addEventListener("input", calculateRate);
+growthrate.addEventListener("input", calculateRate);
+start.addEventListener("input", calculateRate);
 
-alertMe();
+function updateDaysView() {
+    daysView.innerHTML = days.value;
+}
 
-const myInputValue = document.querySelector<HTMLInputElement>("#myInput");
-
-const myInputValueAlternate = document.querySelector(
-  "#myInput"
-) as HTMLInputElement;
-
-document
-  .querySelector<HTMLInputElement>("#myInput")
-  ?.addEventListener("focus", doSmth);
-
-function doSmth(e: UIEvent) {
-  const val = e.target as HTMLInputElement;
-  console.log(e, val.value);
+function calculateRate() {
+    result.innerHTML = Math.floor(
+        start.value * Math.pow(growthrate.value, days.value)
+    );
 }

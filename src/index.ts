@@ -1,24 +1,26 @@
-//THIS IS THE ENTRY FILE - WRITE YOUR MAIN LOGIC HERE!
+const Datum = document.querySelector('#myInput') as HTMLInputElement;
+const ausgabe = document.querySelector('#Ausgabe') as HTMLLIElement;
+const element = document.createElement('p')
+const unl = document.querySelector("#parent") as HTMLUListElement;
+let i;
 
-import { helloWorld, Beispiel } from "./myModule";
-import { alertMe } from "./myOtherModule";
+fetch("https://api.vorlesungsplan.lars-rickert.de/lectures/MOS-WON21")
+    .then(res=>res.json())
+    .then(data=>{
+        console.log(data[0].name)
+        
+        
+        for ( let i = 1; i< data.length; i++ ){
+            
+            // const test = unl.appendChild(document.createElement('li'))
+            // test.textContent = data[i].name + data[i].start;
+            if (data[i].name === "Frontend-Entwicklung (Modul T2)"){
+                const test = unl.appendChild(document.createElement('li'))
+                test.textContent = data[i].name + data[i].start;
 
-console.log(helloWorld);
-customElements.define("my-beispiel", Beispiel);
+            }
 
-alertMe();
-
-const myInputValue = document.querySelector<HTMLInputElement>("#myInput");
-
-const myInputValueAlternate = document.querySelector(
-  "#myInput"
-) as HTMLInputElement;
-
-document
-  .querySelector<HTMLInputElement>("#myInput")
-  ?.addEventListener("focus", doSmth);
-
-function doSmth(e: UIEvent) {
-  const val = e.target as HTMLInputElement;
-  console.log(e, val.value);
-}
+            // element.appendChild(ausgabe)
+            // document.body.appendChild(element)
+        }
+    })

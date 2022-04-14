@@ -122,7 +122,7 @@ function weaklyTableOutput(){
         case 3: 
         wednesday.textContent = curentCourseStart + "\n" + data[i].name
         const d = i;
-        monday.textContent = data[d -2].name;
+        monday.textContent = data[d-2].startTime + data[d -2].name;
         tuesday.textContent = data[d -1].name;
         thursday.textContent = data[d +1].name;
         friday.textContent = data[d +2].name;

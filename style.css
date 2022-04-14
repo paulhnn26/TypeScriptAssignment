@@ -34,13 +34,14 @@ h1 {
     flex-direction: column;
 }
 .tableOutput{
-    background-color: aquamarine;
+    background-color: rgb(204, 213, 219);
     border: 1px solid black;
 }
 .tableHeader{
     font-size: 20px;
     padding:  6px;
     margin: 30px;
+    background-color: azure;
 }
 ul {
     border: 1px solid black;

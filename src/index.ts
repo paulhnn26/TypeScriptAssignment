@@ -31,19 +31,19 @@ fetch("https://api.stuv.app/rapla/lectures/MOS-WON21?archived=true")
   .then((res) => res.json())
   .then((data) => {
     Daten = data;
-    console.log(Daten[0].name);
   });
 
 function DataArray() {
-  console.log("test");
+  console.log("test")
   for (let i = 0; i < Daten.length; i++) {
     if (Daten[i].name.includes(searchInput.value)) {
       const startTime = new Date(Daten[i].startTime);
       const listOutput = unl.appendChild(document.createElement("li"));
-      listOutput.textContent =
-        Daten[i].name +
-        " Startzeit: " +
-        startTime.toLocaleDateString("de-DE", options);
+       listOutput.innerHTML = 
+        `<p> <strong> ${startTime.toLocaleDateString("de-DE", options)} Uhr: </strong> <br> ${Daten[i].name} </p>`
+      //  ` ${startTime.toLocaleDateString("de-DE", options)} Uhr:
+      //  ${Daten[i].name}`
+        
 
       listOutput.classList.add("outputList");
     }
@@ -53,28 +53,51 @@ function DateSearch() {
   for (let i = 1; i < Daten.length; i++) {
     if (Daten[i].startTime.includes(Datum.value)) {
       const startTime = new Date(Daten[i].startTime);
-      console.log(typeof startTime);
+      const outputElement=  document.querySelector(".output") as HTMLUListElement ;
+      outputElement.style.display = "flex";
 
       const listOutput = unl.appendChild(document.createElement("li"));
-      listOutput.textContent =
-        Daten[i].name +
-        " Startzeit: " +
+      listOutput.innerHTML =
+      `<p> <strong> ${startTime.toLocaleDateString("de-DE", options)} Uhr: </strong> <br> ${Daten[i].name} </p>`
         startTime.toLocaleDateString("de-DE", options);
       listOutput.classList.add("outputList");
     }
   }
 }
 
+function DateAndDataSearch(){
+  for (let i = 1; i < Daten.length; i++) {
+    if (Daten[i].startTime.includes(Datum.value) && Daten[i].name.includes(searchInput.value)) {
+      console.log(Daten[i].startTime)
+      const startTime = new Date(Daten[i].startTime);
+      const outputElement=  document.querySelector(".output") as HTMLUListElement ;
+      outputElement.style.display = "flex";
+
+      const listOutput = unl.appendChild(document.createElement("li"));
+      listOutput.innerHTML =
+      `<p> <strong> ${startTime.toLocaleDateString("de-DE", options)} Uhr: </strong> <br> ${Daten[i].name} </p>`
+        startTime.toLocaleDateString("de-DE", options);
+      listOutput.classList.add("outputList");
+
+    }
+}
+ }
+
 function searchLogic() {
   deleteOutput();
   if (Datum.value === "" && searchInput.value === "") {
-    console.log("keine eingabe");
+    
     alert("Bitte tätigen sie eine eingabe");
   } else if (Datum.value === "") {
     DataArray();
   } else if (searchInput.value === "") {
     DateSearch();
   }
+  else if(Datum.value != "" && searchInput.value != ""){
+    DateAndDataSearch();
+  }
+  
+  
 }
 
 function deleteOutput() {
@@ -101,8 +124,6 @@ function weaklyTableOutput() {
         );
 
         if (currentDate === currentCourse) {
-          // const tableOutput = tableRow.appendChild(document.createElement("td"));
-          // tableOutput.textContent = currentDate + data[i].name;
           dateFormatToday.getDay();
           switch (dateFormatToday.getDay()) {
             case 1:
@@ -131,7 +152,8 @@ function weaklyTableOutput() {
 
             case 4:
               thursday.textContent = curentCourseStart + data[i].name;
-              monday.textContent = `${new Date(Daten[i-3].startTime).toLocaleDateString("de-DE", options3)} Uhr: ${data[i - 3].name } `;;
+              monday.innerHTML =  `<p>${new Date(Daten[i-3].startTime).toLocaleDateString("de-DE", options3)} Uhr: <br>
+                                    ${data[i - 3].name } </p> `;
               tuesday.textContent = `${new Date(Daten[i-2].startTime).toLocaleDateString("de-DE", options3)} Uhr: ${data[i - 2].name } `;
               wednesday.textContent = `${new Date(Daten[i-1].startTime).toLocaleDateString("de-DE", options3)} Uhr: ${data[i - 1].name } `;
               friday.textContent = `${new Date(Daten[i+1].startTime).toLocaleDateString("de-DE", options3)} Uhr: ${data[i + 1].name } `;
@@ -148,4 +170,6 @@ function weaklyTableOutput() {
       }
     });
 }
+
 weaklyTableOutput();
+

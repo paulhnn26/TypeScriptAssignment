@@ -66,7 +66,9 @@ function DateSearch() {
 }
 
 function DateAndDataSearch(){
+  let dataNotFound : boolean = true;
   for (let i = 1; i < Daten.length; i++) {
+    
     if (Daten[i].startTime.includes(Datum.value) && Daten[i].name.includes(searchInput.value)) {
       console.log(Daten[i].startTime)
       const startTime = new Date(Daten[i].startTime);
@@ -78,8 +80,13 @@ function DateAndDataSearch(){
       `<p> <strong> ${startTime.toLocaleDateString("de-DE", options)} Uhr: </strong> <br> ${Daten[i].name} </p>`
         startTime.toLocaleDateString("de-DE", options);
       listOutput.classList.add("outputList");
+      dataNotFound = false;
 
     }
+    
+}
+if(dataNotFound === true){
+  alert("Bitte ändern sie ihre Eingabe")
 }
  }
 
@@ -112,22 +119,31 @@ function weaklyTableOutput() {
       const dateToday = Date.now();
       const dateFormatToday = new Date(dateToday);
       const currentDate = dateFormatToday.toLocaleDateString("de-DE", options2);
-
+      
       for (let i = 0; i < data.length; i++) {
         const dateCourse = new Date(Daten[i].startTime);
         const timeToday = dateCourse.toLocaleDateString("de-DE", options3);
-
+        
         let currentCourse = dateCourse.toLocaleDateString("de-DE", options2);
         const curentCourseStart = dateCourse.toLocaleDateString(
           "de-DE",
           options3
         );
+        // if(){
+        //   switch( dateFormatToday.getDay()){
+        //     case 6:
+        //       console.log("test")
+        //   }
 
-        if (currentDate === currentCourse) {
-          dateFormatToday.getDay();
+        // }
+
+          if (currentDate === currentCourse) {
+           dateFormatToday.getDay();
+         
           switch (dateFormatToday.getDay()) {
             case 1:
-              monday.textContent = curentCourseStart + data[i].name;
+              monday.innerHTML = `${curentCourseStart} ${data[i].name}`;
+              console.log(curentCourseStart + data[i].name)
               tuesday.textContent = `${new Date(Daten[i+1].startTime).toLocaleDateString("de-DE", options3)} Uhr: ${data[i +1].name } `;
               wednesday.textContent = `${new Date(Daten[i+2].startTime).toLocaleDateString("de-DE", options3)} Uhr: ${data[i +2].name } `;
               thursday.textContent = `${new Date(Daten[i+3].startTime).toLocaleDateString("de-DE", options3)} Uhr: ${data[i +3].name } `;
@@ -165,8 +181,18 @@ function weaklyTableOutput() {
               wednesday.textContent = `${new Date(Daten[i-2].startTime).toLocaleDateString("de-DE", options3)} Uhr: ${data[i - 2].name } `;
               thursday.textContent = `${new Date(Daten[i-1].startTime).toLocaleDateString("de-DE", options3)} Uhr: ${data[i - 1].name } `;
               break;
+            // case 6:
+            //   monday.innerHTML =  `<p>${new Date(Daten[i+2].startTime).toLocaleDateString("de-DE", options3)} Uhr: <br>
+            //                         ${data[i +2].name } </p> `;
+            //   break;
+            // case 7:
+            //   monday.innerHTML =  `<p>${new Date(Daten[i+1].startTime).toLocaleDateString("de-DE", options3)} Uhr: <br>
+            //   ${data[i +1].name } </p> `;  
+                              
           }
-        }
+        
+         } 
+         
       }
     });
 }

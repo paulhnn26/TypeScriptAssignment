@@ -16,6 +16,7 @@ import {
   wednesday,
   thursday,
   friday,
+  dataNotFound,
 } from "./dom-utils";
 // import dateFormat, {masks} from "dateformat";
 // dateFormat
@@ -33,23 +34,35 @@ fetch("https://api.stuv.app/rapla/lectures/MOS-WON21?archived=true")
     Daten = data;
   });
 
-function DataArray() {
-  console.log("test")
+// function searchOutputLogic () {
+//   const startTime = new Date(Daten[i].startTime);
+//       const listOutput = unl.appendChild(document.createElement("li"));
+//        listOutput.innerHTML = 
+//         `<p> <strong> ${startTime.toLocaleDateString("de-DE", options)} Uhr: </strong> <br> ${Daten[i].name} </p>`    
+//       listOutput.classList.add("outputList");
+//       dataNotFound = false;
+
+
+// }
+
+function searchByName() {
+  let dataNotFound : boolean = true;
   for (let i = 0; i < Daten.length; i++) {
     if (Daten[i].name.includes(searchInput.value)) {
       const startTime = new Date(Daten[i].startTime);
       const listOutput = unl.appendChild(document.createElement("li"));
        listOutput.innerHTML = 
-        `<p> <strong> ${startTime.toLocaleDateString("de-DE", options)} Uhr: </strong> <br> ${Daten[i].name} </p>`
-      //  ` ${startTime.toLocaleDateString("de-DE", options)} Uhr:
-      //  ${Daten[i].name}`
-        
-
+        `<p> <strong> ${startTime.toLocaleDateString("de-DE", options)} Uhr: </strong> <br> ${Daten[i].name} </p>`    
       listOutput.classList.add("outputList");
+      dataNotFound = false;
     }
   }
+  if(dataNotFound === true){
+    alert("Bitte ändern sie ihre Eingabe")
+  }
 }
-function DateSearch() {
+function searchByDate() {
+  let dataNotFound : boolean = true;
   for (let i = 1; i < Daten.length; i++) {
     if (Daten[i].startTime.includes(Datum.value)) {
       const startTime = new Date(Daten[i].startTime);
@@ -61,11 +74,15 @@ function DateSearch() {
       `<p> <strong> ${startTime.toLocaleDateString("de-DE", options)} Uhr: </strong> <br> ${Daten[i].name} </p>`
         startTime.toLocaleDateString("de-DE", options);
       listOutput.classList.add("outputList");
+      dataNotFound = false;
     }
+  }
+  if(dataNotFound === true){
+    alert("Bitte ändern sie ihre Eingabe")
   }
 }
 
-function DateAndDataSearch(){
+function searchByDateAndName(){
   let dataNotFound : boolean = true;
   for (let i = 1; i < Daten.length; i++) {
     
@@ -96,12 +113,12 @@ function searchLogic() {
     
     alert("Bitte tätigen sie eine eingabe");
   } else if (Datum.value === "") {
-    DataArray();
+    searchByName();
   } else if (searchInput.value === "") {
-    DateSearch();
+    searchByDate();
   }
   else if(Datum.value != "" && searchInput.value != ""){
-    DateAndDataSearch();
+    searchByDateAndName();
   }
   
   
@@ -119,7 +136,7 @@ function weaklyTableOutput() {
       const dateToday = Date.now();
       const dateFormatToday = new Date(dateToday);
       const currentDate = dateFormatToday.toLocaleDateString("de-DE", options2);
-      
+      if(dateFormatToday.getDay() != 0 || 6 )
       for (let i = 0; i < data.length; i++) {
         const dateCourse = new Date(Daten[i].startTime);
         const timeToday = dateCourse.toLocaleDateString("de-DE", options3);
@@ -129,14 +146,8 @@ function weaklyTableOutput() {
           "de-DE",
           options3
         );
-        // if(){
-        //   switch( dateFormatToday.getDay()){
-        //     case 6:
-        //       console.log("test")
-        //   }
-
-        // }
-
+      
+         
           if (currentDate === currentCourse) {
            dateFormatToday.getDay();
          
@@ -181,19 +192,22 @@ function weaklyTableOutput() {
               wednesday.textContent = `${new Date(Daten[i-2].startTime).toLocaleDateString("de-DE", options3)} Uhr: ${data[i - 2].name } `;
               thursday.textContent = `${new Date(Daten[i-1].startTime).toLocaleDateString("de-DE", options3)} Uhr: ${data[i - 1].name } `;
               break;
-            // case 6:
-            //   monday.innerHTML =  `<p>${new Date(Daten[i+2].startTime).toLocaleDateString("de-DE", options3)} Uhr: <br>
-            //                         ${data[i +2].name } </p> `;
-            //   break;
-            // case 7:
-            //   monday.innerHTML =  `<p>${new Date(Daten[i+1].startTime).toLocaleDateString("de-DE", options3)} Uhr: <br>
-            //   ${data[i +1].name } </p> `;  
+            
                               
           }
         
-         } 
+         }
+         
+           
+       
          
       }
+      
+           if(dateFormatToday.getDay() == 0|| 6){
+
+           }else if(dateFormatToday.getDay() == 1|| 2 || 3 || 4 || 5){
+             console.log("kein Wochenende")
+           }
     });
 }
 

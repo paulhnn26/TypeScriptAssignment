@@ -78,21 +78,29 @@ h1{
 ul {
     text-align: center;
     list-style: none;
-    max-height: 80%;
+    height: 60%;
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
+    padding-top: 40%;
+    overflow-y:scroll;
+    
     
 }
 th{
     background-color: var(--primarycolor);
 }
 .outputElement ul {
-    width: 80%;
+    width: 70%;
+    max-height: 80%;
+    
+    padding-top: 40%;
 }
 .outputElement h2 {
     margin-top: 10px;
+    /* margin-bottom: 20px; */
+    padding-bottom: 20px;
 }
 #Tuesday, #Thursday{
     background-color: rgba(137,210,220,0.6);
@@ -135,6 +143,7 @@ input {
     width: 150px;
     height: 35px;
     border-radius: 8px;
+    text-align: center;
 }
 .inputContainer{
     justify-content: space-between;

@@ -20,126 +20,50 @@ import {
   dataNotFound,
   fridayOutput,
 } from "./dom-utils";
+import { displayOutput, searchByDate, searchByDateAndName, searchByName } from "./search";
 
 
-btn.addEventListener("click", searchLogic);
+
 
 let Daten: any[] = [];
 
 
 
-fetch("https://api.stuv.app/rapla/lectures/MOS-WON21?archived=true")
-  .then((res) => res.json())
-  .then((data) => {
-    Daten = data;
-   return data
-  });
+
   function fetching(){
     fetch("https://api.stuv.app/rapla/lectures/MOS-WON21?archived=true")
   .then((res) => res.json())
   .then((data) => {
-    updateSchedule(data)
     
+    Daten = data
+  
+   
+    btn.addEventListener("click", searchLogic);
+    function searchLogic() {
+      deleteOutput();
+      if (Datum.value === "" && searchInput.value === "") {
+        alert("Bitte tätigen sie eine eingabe");
+      } else if (Datum.value === "") {
+        searchByName(data);
+      } else if (searchInput.value === "") {
+         searchByDate(data);
+      } else if (Datum.value != "" && searchInput.value != "") {
+         searchByDateAndName(data);
+      }
+    }
+
+    
+    return data;
   });
   
   
   }
-  function updateSchedule(lessons : object){
-    
-    
-  }
+  
   fetching();
 
- 
-
-function searchOutputLogic(dataNotFound: boolean, i : number ) {
-  const startTime = new Date(Daten[i].startTime);
-  const outputElement = document.querySelector(".output") as HTMLUListElement;
-  outputElement.style.display = "flex";
-
-  const listOutput = unl.appendChild(document.createElement("li"));
-  listOutput.innerHTML = `<p> <strong> ${startTime.toLocaleDateString(
-    "de-DE",
-    options
-  )} Uhr: </strong> <br> ${Daten[i].name} </p>`;
-  startTime.toLocaleDateString("de-DE", options);
-  listOutput.classList.add("outputList");
-  dataNotFound = false;
-
-  return dataNotFound;
-}
 
 
-function searchByName() {
-  let dataNotFound: boolean = true;
-  testFunction(Daten)
 
-  for (let i = 1; i < Daten.length; i++) {
-    
-    if (Daten[i].name.includes(searchInput.value)) {
-      searchOutputLogic(dataNotFound, i);
-    }
-  }
-  
-  if (searchOutputLogic(dataNotFound, 0) === true) {
-    alert("Bitte ändern sie ihre Eingabe");
-  }
-  
-  }
-function testFunction(data : any){
-  for (let singleDay of data) {
-    if(singleDay.name.includes(searchInput.value)){
-      console.log(singleDay.name)
-      
-    }
-    
-}
-}
-  
-  
-  
-  
- 
-
-function searchByDate() {
-  let dataNotFound: boolean = true;
-  for (let i = 1; i < Daten.length; i++) {
-    if (Daten[i].startTime.includes(Datum.value)) {
-      searchOutputLogic(dataNotFound, i);
-    }
-  }
-  if (searchOutputLogic(dataNotFound, 0) === true) {
-    alert("Bitte ändern sie ihre Eingabe");
-  }
-}
-
-function searchByDateAndName() {
-  let dataNotFound: boolean = true;
-  for (let i = 1; i < Daten.length; i++) {
-    if (
-      Daten[i].startTime.includes(Datum.value) &&
-      Daten[i].name.includes(searchInput.value)
-    ) {
-      searchOutputLogic(dataNotFound, i);
-    }
-  }
-  if (searchOutputLogic(dataNotFound, 0) === true) {
-    alert("Bitte ändern sie ihre Eingabe");
-  }
-}
-
-function searchLogic(data : any) {
-  deleteOutput();
-  if (Datum.value === "" && searchInput.value === "") {
-    alert("Bitte tätigen sie eine eingabe");
-  } else if (Datum.value === "") {
-    searchByName();
-  } else if (searchInput.value === "") {
-    searchByDate();
-  } else if (Datum.value != "" && searchInput.value != "") {
-    searchByDateAndName();
-  }
-}
 
 function deleteOutput() {
   document.querySelectorAll(".outputList").forEach((e) => e.remove());

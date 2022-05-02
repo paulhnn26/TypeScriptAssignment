@@ -7,6 +7,11 @@ export const tuesday =  document.querySelector("#Tuesday") as HTMLTableCellEleme
 export const wednesday = document.querySelector("#Wednesday") as HTMLTableCellElement;
 export const thursday =  document.querySelector("#Thursday") as HTMLTableCellElement;
 export const friday =  document.querySelector("#Friday") as HTMLTableCellElement;
+export const mondayOutput = document.querySelector(".mondayOutput") as HTMLUListElement;
+export const tuesdayOutput = document.querySelector(".tuesdayOutput") as HTMLUListElement;
+export const wednesdayOutput = document.querySelector(".wednesdayOutput") as HTMLUListElement;
+export const thursdayOutput = document.querySelector(".thursdayOutput") as HTMLUListElement;
+export const fridayOutput = document.querySelector(".fridayOutput") as HTMLUListElement;
 
 export const unl = document.querySelector("#parent") as HTMLUListElement;
 export const btn = document.querySelector("#button") as HTMLButtonElement;

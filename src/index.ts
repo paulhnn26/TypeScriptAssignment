@@ -26,15 +26,34 @@ btn.addEventListener("click", searchLogic);
 
 let Daten: any[] = [];
 
+
+
 fetch("https://api.stuv.app/rapla/lectures/MOS-WON21?archived=true")
   .then((res) => res.json())
   .then((data) => {
     Daten = data;
-    Daten = data.json();
+   return data
   });
+  function fetching(){
+    fetch("https://api.stuv.app/rapla/lectures/MOS-WON21?archived=true")
+  .then((res) => res.json())
+  .then((data) => {
+    updateSchedule(data)
+    
+  });
+  
+  
+  }
+  function updateSchedule(lessons : object){
+    
+    
+  }
+  fetching();
 
-function searchOutputLogic(dataNotFound: boolean, element : any) {
-  const startTime = new Date(element.startTime);
+ 
+
+function searchOutputLogic(dataNotFound: boolean, i : number ) {
+  const startTime = new Date(Daten[i].startTime);
   const outputElement = document.querySelector(".output") as HTMLUListElement;
   outputElement.style.display = "flex";
 
@@ -42,7 +61,7 @@ function searchOutputLogic(dataNotFound: boolean, element : any) {
   listOutput.innerHTML = `<p> <strong> ${startTime.toLocaleDateString(
     "de-DE",
     options
-  )} Uhr: </strong> <br> ${element.name} </p>`;
+  )} Uhr: </strong> <br> ${Daten[i].name} </p>`;
   startTime.toLocaleDateString("de-DE", options);
   listOutput.classList.add("outputList");
   dataNotFound = false;
@@ -50,25 +69,38 @@ function searchOutputLogic(dataNotFound: boolean, element : any) {
   return dataNotFound;
 }
 
-function searchByName(data : object) {
-  let dataNotFound: boolean = true;
-  for (const i :number of data[i]) {
-    
-  }
-  
-  
-  data.forEach((element: { name: string; })   => {
-    if(element.name.includes(searchInput.value)){
-      searchOutputLogic(dataNotFound, element)
 
-    }
+function searchByName() {
+  let dataNotFound: boolean = true;
+  testFunction(Daten)
+
+  for (let i = 1; i < Daten.length; i++) {
     
-  });
+    if (Daten[i].name.includes(searchInput.value)) {
+      searchOutputLogic(dataNotFound, i);
+    }
+  }
   
   if (searchOutputLogic(dataNotFound, 0) === true) {
     alert("Bitte ändern sie ihre Eingabe");
   }
+  
+  }
+function testFunction(data : any){
+  for (let singleDay of data) {
+    if(singleDay.name.includes(searchInput.value)){
+      console.log(singleDay.name)
+      
+    }
+    
 }
+}
+  
+  
+  
+  
+ 
+
 function searchByDate() {
   let dataNotFound: boolean = true;
   for (let i = 1; i < Daten.length; i++) {
@@ -101,7 +133,7 @@ function searchLogic(data : any) {
   if (Datum.value === "" && searchInput.value === "") {
     alert("Bitte tätigen sie eine eingabe");
   } else if (Datum.value === "") {
-    searchByName(data);
+    searchByName();
   } else if (searchInput.value === "") {
     searchByDate();
   } else if (Datum.value != "" && searchInput.value != "") {
@@ -114,6 +146,7 @@ function deleteOutput() {
 }
 
 function weaklyTableOutput() {
+  
   fetch("https://api.stuv.app/rapla/lectures/MOS-WON21?archived=true")
     .then((res) => res.json())
     .then((data) => {
@@ -162,6 +195,7 @@ function weaklyTableOutput() {
             );
           }
          else if (dateFormatToday.getDay() === 1 || 2 || 3 || 4 || 5) {
+          
 
 
          

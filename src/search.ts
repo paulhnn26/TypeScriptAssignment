@@ -37,7 +37,6 @@ import {
             "de-DE",
             options
           )} Uhr: </strong> <br> ${singleDay.name} </p>`;
-          startTime.toLocaleDateString("de-DE", options);
           listOutput.classList.add("outputList");
   
   

@@ -1,16 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script defer src="./build/bundle.js"></script>
-</head>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
-    <my-beispiel></my-beispiel>
-    <input type="text" id="myInput" />
-</body>
-
+  <body>
+    <header>
+      <h1>Stundenplan</h1>
+    </header>
+    <!-- <div class="content"> -->
+      <div class="searchContainer">
+        <div class="searchElement">
+          <h2>Auswahl:</h2>
+          <p>Suchen Sie nach einem Datum oder <br> einer bestimmten Vorlesung:</p>
+          <div class="inputContainer">
+            <input class="search" type="date" id="myInput" />
+            <input class="search" type="text" placeholder="Suche" id="searchInput" />
+          </div>
+          <button id="button">Suche</button>
+        </div>
+        <div class="outputElement">
+          <h2>Ergebnis:</h2>
+          <ul class="output" id="parent"></ul>
+        </div>
+      </div>
+      <div class="weeklyOutput">
+        <table class="tableOutput">
+          <tr class="tableHeader">
+            <th>Montag</th>
+            <th>Dienstag</th>
+            <th>Mittwoch</th>
+            <th>Donnerstag</th>
+            <th>Freitag</th>
+          </tr>
+          <tr class="tableRow">
+            <td id="Monday"><ul class="mondayOutput"></ul></td>
+            <td id="Tuesday"><ul class="tuesdayOutput"></ul></td>
+            <td id="Wednesday"><ul class="wednesdayOutput"></ul></td>
+            <td id="Thursday"><ul class="thursdayOutput"></ul></td>
+            <td id="Friday"><ul class="fridayOutput"></ul></td>
+          </tr>
+        </table>
+      </div>
+    <!-- </div> -->
+  </body>
 </html>

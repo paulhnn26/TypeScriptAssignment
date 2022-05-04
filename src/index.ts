@@ -34,7 +34,7 @@ import {
 function fetching() {
   fetch("https://api.stuv.app/rapla/lectures/MOS-WON21?archived=true")
     .then((res) => res.json())
-    .then((data) => {
+    .then((data :lectureentry[]) => {
       
 
       btn.addEventListener("click", searchLogic);

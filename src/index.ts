@@ -21,267 +21,211 @@ import {
   fridayOutput,
   thursdayOutput,
 } from "./dom-utils";
-import { displayOutput, searchByDate, searchByDateAndName, searchByName } from "./search";
+import { lectureentry } from "./interfaces";
+import {
+  displayOutput,
+  searchByDate,
+  searchByDateAndName,
+  searchByName,
+} from "./search";
 
 
 
+function fetching() {
+  fetch("https://api.stuv.app/rapla/lectures/MOS-WON21?archived=true")
+    .then((res) => res.json())
+    .then((data) => {
+      
 
-let Daten: any[] = [];
-
-
-
-
-  function fetching(){
-    fetch("https://api.stuv.app/rapla/lectures/MOS-WON21?archived=true")
-  .then((res) => res.json())
-  .then((data) => {
-    
-    Daten = data
-  
-   
-    btn.addEventListener("click", searchLogic);
-    function searchLogic() {
-      deleteOutput();
-      if (Datum.value === "" && searchInput.value === "") {
-        alert("Bitte tätigen sie eine eingabe");
-      } else if (Datum.value === "") {
-        searchByName(data);
-      } else if (searchInput.value === "") {
-         searchByDate(data);
-      } else if (Datum.value != "" && searchInput.value != "") {
-         searchByDateAndName(data);
+      btn.addEventListener("click", searchLogic);
+      function searchLogic() {
+        deleteOutput();
+        if (Datum.value === "" && searchInput.value === "") {
+          alert("Bitte tätigen sie eine eingabe");
+        } else if (Datum.value === "") {
+          searchByName(data);
+        } else if (searchInput.value === "") {
+          searchByDate(data);
+        } else if (Datum.value != "" && searchInput.value != "") {
+          searchByDateAndName(data);
+        }
       }
-    }
-    
 
-    
-    return data;
-  });
-  
-  
-  }
-  
-  fetching();
-  
+      return data;
+    });
+}
 
-
-
+fetching();
 
 function deleteOutput() {
   document.querySelectorAll(".outputList").forEach((e) => e.remove());
 }
 
 function weaklyTableOutput() {
-  
   fetch("https://api.stuv.app/rapla/lectures/MOS-WON21?archived=true")
     .then((res) => res.json())
-    .then((data) => {
-      Daten = data;
-      let dateToday = Date.now();
-      let dateReformed ;
+    .then((data:lectureentry[]) => {
      
-      let dateFormatToday = new Date(dateToday); 
+      let dateToday = Date.now();
+      let dateReformed;
+
+      let dateFormatToday = new Date(dateToday);
       let currentDate = dateFormatToday.toLocaleDateString("de-DE", options2);
 
-      for (const iterator of data) {
-        const dateCourse = new Date(iterator.startTime);
+      for (const lessons of data) {
+        
+        const dateCourse = new Date(lessons.startTime);
         let currentCourse = dateCourse.toLocaleDateString("de-DE", options2);
         const curentCourseStart = dateCourse.toLocaleDateString(
           "de-DE",
           options3
         );
         if (dateFormatToday.getDay() === 6) {
-            
           dateReform(dateToday, dateFormatToday, currentDate, 2, "");
-          currentDate= dateReform(dateToday, dateFormatToday, currentDate, 2, "")
-          console.log(currentDate)
-         
+          currentDate = dateReform(
+            dateToday,
+            dateFormatToday,
+            currentDate,
+            2,
+            ""
+          );
+          console.log(currentDate);
+
           weeklyOutputFiller(
             data,
             dateFormatToday,
             curentCourseStart,
-            iterator,
+            lessons,
             currentDate,
             currentCourse
           );
         } else if (dateFormatToday.getDay() === 0) {
-          dateReform(dateToday, dateFormatToday, currentDate, 1 , "");
-          currentDate= dateReform(dateToday, dateFormatToday, currentDate, 2, "")
+          dateReform(dateToday, dateFormatToday, currentDate, 1, "");
+          currentDate = dateReform(
+            dateToday,
+            dateFormatToday,
+            currentDate,
+            2,
+            ""
+          );
           weeklyOutputFiller(
             data,
             dateFormatToday,
             curentCourseStart,
-            iterator,
+            lessons,
+            currentDate,
+            currentCourse
+          );
+        } else if (dateFormatToday.getDay() === 1 || 2 || 3 || 4 || 5) {
+          weeklyOutputFiller(
+            data,
+            dateFormatToday,
+            curentCourseStart,
+            lessons,
             currentDate,
             currentCourse
           );
         }
-       else if (dateFormatToday.getDay() === 1 || 2 || 3 || 4 || 5) {
-        
-
-
-       
-          weeklyOutputFiller(
-            data,
-            dateFormatToday,
-            curentCourseStart,
-            iterator,
-            currentDate,
-            currentCourse
-          );
-        
       }
-      }
-    
-  
-      
-
-      // for (let i = 0; i < data.length; i++) {
-      //   const dateCourse = new Date(Daten[i].startTime);
-      //   let currentCourse = dateCourse.toLocaleDateString("de-DE", options2);
-      //   const curentCourseStart = dateCourse.toLocaleDateString(
-      //     "de-DE",
-      //     options3
-      //   );
-        
-      //     if (dateFormatToday.getDay() === 6) {
-            
-      //       dateReform(dateToday, dateFormatToday, currentDate, 2, "");
-      //       currentDate= dateReform(dateToday, dateFormatToday, currentDate, 2, "")
-      //       console.log(currentDate)
-           
-      //       weeklyOutputFiller(
-      //         data,
-      //         dateFormatToday,
-      //         curentCourseStart,
-      //         i,
-      //         currentDate,
-      //         currentCourse
-      //       );
-      //     } else if (dateFormatToday.getDay() === 0) {
-      //       dateReform(dateToday, dateFormatToday, currentDate, 1 , "");
-      //       currentDate= dateReform(dateToday, dateFormatToday, currentDate, 2, "")
-      //       weeklyOutputFiller(
-      //         data,
-      //         dateFormatToday,
-      //         curentCourseStart,
-      //         i,
-      //         currentDate,
-      //         currentCourse
-      //       );
-      //     }
-      //    else if (dateFormatToday.getDay() === 1 || 2 || 3 || 4 || 5) {
-          
-
-
-         
-      //       weeklyOutputFiller(
-      //         data,
-      //         dateFormatToday,
-      //         curentCourseStart,
-      //         i,
-      //         currentDate,
-      //         currentCourse
-      //       );
-          
-      //   }
-      // }
     });
 }
-    
 
 weaklyTableOutput();
 
 function weeklyOutputFiller(
-  data: any,
+  data:lectureentry[],
   dateFormatToday: Date,
   curentCourseStart: string,
-  iterator : any,
+  lesson:  any,
   currentDate: string,
   currentCourse: string
 ) {
   if (currentDate === currentCourse) {
-    console.log(currentDate)
+    console.log(currentDate);
     switch (dateFormatToday.getDay()) {
       case 1:
-        monday.innerHTML = `${new Date(iterator.startTime).toLocaleDateString(
+        monday.innerHTML = `${new Date(lesson.startTime).toLocaleDateString(
           "de-DE",
           options3
-        )} ${iterator.name}`;
+        )} ${lesson.name}`;
 
-        tuesday.textContent = dayTextContent(1, data, iterator);
-        wednesday.textContent = dayTextContent(2, data, iterator);
-        thursday.textContent = dayTextContent(3, data, iterator);
-        friday.textContent = dayTextContent(4, data, iterator);
-        
+        tuesday.textContent = dayTextContent(1, data, lesson);
+        wednesday.textContent = dayTextContent(2, data, lesson);
+        thursday.textContent = dayTextContent(3, data, lesson);
+        friday.textContent = dayTextContent(4, data, lesson);
+
         break;
       case 2:
-        tuesday.innerHTML = `${new Date(iterator.startTime).toLocaleDateString(
+        tuesday.innerHTML = `${new Date(lesson.startTime).toLocaleDateString(
           "de-DE",
           options3
-        )} ${iterator.name}`;
-        monday.textContent = dayTextContent(-1, data, iterator);
-        wednesday.textContent = dayTextContent(1, data, iterator);
-        let thursdayChildOutput = thursdayOutput.appendChild(document.createElement("li")) 
-        thursdayChildOutput.textContent = dayTextContent(2, data, iterator);
-        console.log(dayTextContent(2, data, iterator))
-        // thursday.textContent = dayTextContent(2, data, iterator);
-        let fridayChildOutput = fridayOutput.appendChild(document.createElement("li")) 
-        fridayChildOutput.textContent=  dayTextContent(3, data, iterator);
+        )} ${lesson.name}`;
+        monday.textContent = dayTextContent(-1, data, lesson);
+        wednesday.textContent = dayTextContent(1, data, lesson);
+        let thursdayChildOutput = thursdayOutput.appendChild(
+          document.createElement("li")
+        );
+        thursdayChildOutput.textContent = dayTextContent(2, data, lesson);
+        console.log(dayTextContent(2, data, lesson));
+        
+        let fridayChildOutput = fridayOutput.appendChild(
+          document.createElement("li")
+        );
+        fridayChildOutput.textContent = dayTextContent(3, data, lesson);
         break;
 
       case 3:
         wednesday.textContent = `${new Date(
-          iterator.startTime
-        ).toLocaleDateString("de-DE", options3)} ${iterator.name}`;
-        monday.textContent = dayTextContent(-2, data, iterator);
-        tuesday.textContent = dayTextContent(-1, data, iterator);
-        thursday.textContent = dayTextContent(1, data, iterator);
-        friday.textContent = dayTextContent(2, data, iterator);
+          lesson.startTime
+        ).toLocaleDateString("de-DE", options3)} ${lesson.name}`;
+        monday.textContent = dayTextContent(-2, data, lesson);
+        tuesday.textContent = dayTextContent(-1, data, lesson);
+        thursday.textContent = dayTextContent(1, data, lesson);
+        friday.textContent = dayTextContent(2, data, lesson);
         break;
 
       case 4:
-        thursday.textContent = dayTextContent(0, data, iterator);
-        monday.textContent = dayTextContent(-3, data, iterator);
-        tuesday.textContent = dayTextContent(-2, data, iterator);
-        wednesday.textContent = dayTextContent(-1, data, iterator);
-        friday.textContent = dayTextContent(1, data, iterator);
+        thursday.textContent = dayTextContent(0, data, lesson);
+        monday.textContent = dayTextContent(-3, data, lesson);
+        tuesday.textContent = dayTextContent(-2, data, lesson);
+        wednesday.textContent = dayTextContent(-1, data, lesson);
+        friday.textContent = dayTextContent(1, data, lesson);
         break;
       case 5:
-         fridayChildOutput = fridayOutput.appendChild(document.createElement("li"))
-        fridayChildOutput.textContent = dayTextContent(0, data, iterator);
+        fridayChildOutput = fridayOutput.appendChild(
+          document.createElement("li")
+        );
+        fridayChildOutput.textContent = dayTextContent(0, data, lesson);
         // friday.textContent = dayTextContent(0, data, i);
-        monday.textContent = dayTextContent(-4, data, iterator);
-        tuesday.textContent = dayTextContent(-3, data, iterator);
-        wednesday.textContent = dayTextContent(-2, data, iterator);
-        thursday.textContent = dayTextContent(-1, data, iterator);
+        monday.textContent = dayTextContent(-4, data, lesson);
+        tuesday.textContent = dayTextContent(-3, data, lesson);
+        wednesday.textContent = dayTextContent(-2, data, lesson);
+        thursday.textContent = dayTextContent(-1, data, lesson);
         break;
     }
   }
 }
-function dayTextContent(daynumber: number, data: any, iterator: any) {
-  
+function dayTextContent(daynumber: number, data :lectureentry[], iterator : any) {
+  const DateCourseToday = new Date(iterator.startTime);
+  DateCourseToday.setDate(DateCourseToday.getDate() + daynumber);
+  const DateWeekdaysReformed = DateCourseToday.toLocaleDateString(
+    "de-DE",
+    options2
+  );
+  for (const otherDays of data) {
+    const testTage = new Date(otherDays.startTime).toLocaleDateString(
+      "de-DE",
+      options2
+    );
 
-  const DateCourseToday = new Date(iterator.startTime) 
-  DateCourseToday.setDate(DateCourseToday.getDate() + daynumber)
-  const DateWeekdaysReformed = DateCourseToday.toLocaleDateString("de-DE", options2);
-  for (const otherDays of data) {  
-    const testTage =  new Date(otherDays.startTime).toLocaleDateString("de-DE", options2) 
-    
-    if( testTage.includes(DateWeekdaysReformed) ){
-      
-      return  `${new Date(otherDays.startTime).toLocaleDateString(
+    if (testTage.includes(DateWeekdaysReformed)) {
+      return `${new Date(otherDays.startTime).toLocaleDateString(
         "de-DE",
         options3
       )} Uhr: ${otherDays.name} `;
-      
     }
-    
-  }return ""
-
-
-  
-  
+  }
+  return "";
 }
 
 function dateReform(
@@ -289,16 +233,13 @@ function dateReform(
   dateFormatToday: Date,
   currentDate: string,
   weekendBuffer: number,
-  dateReformed : string
+  dateReformed: string
 ) {
   dateToday = dateFormatToday.setDate(
     dateFormatToday.getDate() + weekendBuffer
   );
   dateFormatToday = new Date(dateToday);
   currentDate = dateFormatToday.toLocaleDateString("de-DE", options2);
-  
-  return  currentDate;
-  
-}
 
-    
+  return currentDate;
+}

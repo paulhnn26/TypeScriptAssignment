@@ -14,6 +14,7 @@ import {
     dataNotFound,
     fridayOutput,
   } from "./dom-utils";
+  import { lectureentry } from "./interfaces";
 
   export function searchByName(data: any){
     let dataNotFound: boolean = true;
@@ -27,7 +28,7 @@ import {
   }
   }
 
-  export function displayOutput(singleDay: any){
+  export function displayOutput(singleDay :any){
     console.log(singleDay.name)
         const startTime = new Date(singleDay.startTime);
         const outputElement = document.querySelector(".output") as HTMLUListElement;
@@ -41,7 +42,7 @@ import {
   
   
   }
-  export function searchByDate(data: any) {
+  export function searchByDate(data :lectureentry[]) {
     let dataNotFound: boolean = true;
     for (let singleDay of data) {
       if(singleDay.startTime.includes(Datum.value)){
@@ -54,7 +55,7 @@ import {
   }
 
 
-export function searchByDateAndName(data: any) {
+export function searchByDateAndName(data :lectureentry[]) {
     let dataNotFound: boolean = true;
   
     for (let singleDay of data) {

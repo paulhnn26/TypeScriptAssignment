@@ -166,7 +166,7 @@ function weeklyOutputFiller(
           document.createElement("li")
         );
         thursdayChildOutput.textContent = dayTextContent(2, data, lesson);
-        console.log(dayTextContent(2, data, lesson));
+        
         
         let fridayChildOutput = fridayOutput.appendChild(
           document.createElement("li")
@@ -178,6 +178,7 @@ function weeklyOutputFiller(
         wednesday.textContent = `${new Date(
           lesson.startTime
         ).toLocaleDateString("de-DE", options3)} ${lesson.name}`;
+        console.log(dayTextContent(0, data, lesson))
         monday.textContent = dayTextContent(-2, data, lesson);
         tuesday.textContent = dayTextContent(-1, data, lesson);
         thursday.textContent = dayTextContent(1, data, lesson);

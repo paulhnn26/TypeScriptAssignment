@@ -29,8 +29,7 @@ import {
   }
 
   export function displayOutput(singleDay :any){
-    console.log(singleDay.name)
-        const startTime = new Date(singleDay.startTime);
+        const startTime :Date = new Date(singleDay.startTime);
         const outputElement = document.querySelector(".output") as HTMLUListElement;
         outputElement.style.display = "flex";
         const listOutput = unl.appendChild(document.createElement("li"));
@@ -66,4 +65,7 @@ export function searchByDateAndName(data :lectureentry[]) {
       }
       
   }
+  }
+ export function deleteOutput() {
+    document.querySelectorAll(".outputList").forEach((e) => e.remove());
   }

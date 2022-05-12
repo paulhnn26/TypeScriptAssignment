@@ -102,9 +102,7 @@ export function weeklyOutputFiller(
   
       return dateWeekDay === lectureDate;
     });
-    console.log(lectures);
     weekday.innerHTML = dayTextContent(numberofDays, lectures);
-    console.log(dayTextContent(numberofDays, lectures));
   }
 
   export function dayOutput(
@@ -127,15 +125,16 @@ export function weeklyOutputFiller(
   
     lessons: lectureentry[]
   ) {
-  
+    let outputString :string = ""
     for (const otherLessons of lessons) {
       const DateCourseToday : Date = new Date(otherLessons.startTime);
       DateCourseToday.setDate(DateCourseToday.getDate() + daynumber);
-      return `${new Date(otherLessons.startTime).toLocaleDateString(
+      outputString += `${new Date(otherLessons.startTime).toLocaleDateString(
         "de-DE",
         options3
-      )} Uhr: ${otherLessons.name} `;
+      )} Uhr: ${otherLessons.name} <br> ` ;
     }
+    return outputString
   }
 
   export function dateReform(
@@ -173,7 +172,6 @@ export function weeklyOutputFiller(
             options3
           );
           if (dateFormatToday.getDay() === 6) {
-            // dateReform(dateToday, dateFormatToday, currentDate, 2, "");
             currentDate = dateReform(
               dateToday,
               dateFormatToday,
@@ -191,7 +189,6 @@ export function weeklyOutputFiller(
               currentCourse
             );
           } else if (dateFormatToday.getDay() === 0) {
-            // dateReform(dateToday, dateFormatToday, currentDate, 1, "");
             currentDate = dateReform(
               dateToday,
               dateFormatToday,
@@ -199,7 +196,6 @@ export function weeklyOutputFiller(
               1,
               ""
             );
-            console.log(currentDate);
             weeklyOutputFiller(
               data,
               dateFormatToday,

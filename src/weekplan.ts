@@ -127,12 +127,13 @@ export function weeklyOutputFiller(
   ) {
     let outputString :string = ""
     for (const otherLessons of lessons) {
-      const DateCourseToday : Date = new Date(otherLessons.startTime);
-      DateCourseToday.setDate(DateCourseToday.getDate() + daynumber);
+        
+    //   const DateCourseToday : Date = new Date(otherLessons.startTime);
+    //   DateCourseToday.setDate(DateCourseToday.getDate() + daynumber);
       outputString += `${new Date(otherLessons.startTime).toLocaleDateString(
         "de-DE",
         options3
-      )} Uhr: ${otherLessons.name} <br> ` ;
+      )}-${new Date(otherLessons.endTime).toLocaleString("de-DE", options3)} Uhr: <br> ${otherLessons.name} <br> ` ;
     }
     return outputString
   }

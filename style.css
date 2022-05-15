@@ -153,3 +153,6 @@ input {
     display: flex;
     width: 50%;
 }
+td{
+    text-align: center;
+}

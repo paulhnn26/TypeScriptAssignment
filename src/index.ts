@@ -26,29 +26,12 @@ import { lectureentry } from "./interfaces";
 import {
   deleteOutput,
   displayOutput,
-  fetching,
+  search,
   searchByDate,
   searchByDateAndName,
   searchByName,
 } from "./search";
 import { weaklyTableOutput, weeklyOutputFiller } from "./weekplan";
 
-
-
-fetching();
-
-
-
-
-
+search();
 weaklyTableOutput();
-
-
-
-
-
-
-
-
-
-

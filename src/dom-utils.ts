@@ -19,4 +19,4 @@ export const options :object = {  weekday: 'long', year: 'numeric', month: 'long
 export const options2 : object = {};
 export const options3 : object = {   hour: 'numeric', minute: 'numeric'};
 export let dataNotFound : boolean = true;
-export let i = 0;
+
